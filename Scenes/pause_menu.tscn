@@ -1,0 +1,57 @@
+[gd_scene load_steps=2 format=3 uid="uid://dwpi3y4jrnmdi"]
+
+[sub_resource type="GDScript" id="GDScript_iqpwl"]
+script/source = "extends Control
+
+# Reference to the main script
+@onready var main = get_parent().get_parent()  # Adjusted path to ensure proper referencing
+
+# Resume button pressed
+func _on_resume_btn_pressed():
+	if main.paused:  # Only call pauseMenu if the game is currently paused
+		main.pauseMenu()
+
+# Main menu button pressed
+func _on_main_menu_btn_pressed():
+	get_tree().change_scene_to_file(\"res://Scenes/title_screen.tscn\")
+	print(\"Scene changed successfully\")
+"
+
+[node name="PauseMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_iqpwl")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 292.0
+offset_top = 75.0
+offset_right = 827.0
+offset_bottom = 220.0
+theme_override_font_sizes/font_size = 81
+text = "Game Paused"
+
+[node name="ResumeBtn" type="Button" parent="."]
+layout_mode = 0
+offset_left = 421.0
+offset_top = 242.0
+offset_right = 701.0
+offset_bottom = 332.0
+theme_override_font_sizes/font_size = 36
+text = "Continue"
+
+[node name="MainMenuBtn" type="Button" parent="."]
+layout_mode = 0
+offset_left = 427.0
+offset_top = 407.0
+offset_right = 707.0
+offset_bottom = 497.0
+theme_override_font_sizes/font_size = 36
+text = "Main Menu"
+
+[connection signal="pressed" from="ResumeBtn" to="." method="_on_resume_btn_pressed"]
+[connection signal="pressed" from="MainMenuBtn" to="." method="_on_main_menu_btn_pressed"]
